@@ -55,24 +55,18 @@ export const getForm = async () => {
 };
 
 
-export const saveForm = async (name, characteristics, quantity, size, price, imgURL, imgURL2) => {
-  try {
-    // Guardar los datos, incluyendo la URL de la imagen en Firestore
-    return addDoc(collection(db, 'productos'), { 
-      name, 
-      characteristics, 
-      quantity, 
-      size, 
-      price, 
-      img: imgURL, // Almacena la URL en lugar del archivo
-      img2: imgURL2
-
-    });
-  } catch (error) {
-    console.error("Error al guardar el formulario:", error);
-    throw error;
-  }
+export const saveForm = (name, category, characteristics, quantity, price, img, img2) => {
+  return addDoc(collection(db, "productos"), {
+    name,
+    category,
+    characteristics,
+    quantity,
+    price,
+    img,
+    img2,
+  });
 };
+
 
 export const updateProduct = async (productId, newData) => {
   const productRef = doc(db, "productos", productId);

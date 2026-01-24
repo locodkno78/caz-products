@@ -3,9 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script type="module" src="../firebase.js"></script>
+    <script type="module" src="./home.js"></script>
+    <link rel="stylesheet" href="../styles.css">
     <title>Home</title>
 </head>
 <body>
-    <h1>Este es el Home</h1>
+     <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-4 h1">CAZ Insumos Industriales</span>
+                <div>                    
+                    <button class="btn btn-danger" data-bs-toggle="tooltip" title="Cerrar Sesión" type="button"
+                        id="logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="header d-flex container-fluid">
+                <div class="control">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" id="searchInput" type="search" placeholder="Producto"
+                            aria-label="Search">
+                        <button type="button" class="btn btn-danger" id="searchButton">Buscar</button>
+                    </form>
+                </div>
+                <button type="button" class="btn btn-danger" id="openRegisterModal" data-bs-toggle="modal"
+                    data-bs-target="#newCustomer">
+                    <i class="bi bi-plus"></i><span> Agregar Producto</span></button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered" id="table">
+                    <!--LOS DATOS SE CARGARÁN DE FORMA DINAMICA-->
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!--Registro de nuevo producto-->
+    <div class="modal fade" id="newCustomer" tabindex="-1" aria-labelledby="newCustomerlabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header bg-dark text-white">
+                    <h2 class="modal-title bg-dark text-white">Registrar Nuevo Producto</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="register-form" enctype="multipart/form-data">
+                        <div class="field">
+                            <label class="label"><strong>Nombre</strong></label>
+                            <div class="control">
+                                <input class="form-control" name="name" type="text" placeholder="Nombre" required>
+                            </div>
+                        </div>
+                        <div class="field">
+  <label class="label"><strong>Categoría</strong></label>
+  <div class="control">
+    <input class="form-control" name="category" type="text" placeholder="Ej: Herramientas" required>
+  </div>
+</div>
+                        <div class="field">
+                            <label class="label"><strong> Características </strong></label>
+                            <div class="control">
+                                <input class="form-control" name="characteristics" type="text" placeholder="Características"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label"><strong> Cantidad </strong></label>
+                            <div class="control">
+                                <input class="form-control" name="quantity" type="number" placeholder="Cantidad" required>
+                            </div>
+                        </div>                       
+                        <div class="field">
+                            <label class="label"><strong> Precio </strong></label>
+                            <div class="control">
+                                <input class="form-control" name="price" type="number" placeholder="Precio" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label"><strong> Imagen (URL) </strong></label>
+                            <div class="control">
+                                <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
+                            </div>
+                        </div> 
+                        <div class="field">
+                            <label class="label"><strong> Imagen (URL) </strong></label>
+                            <div class="control">
+                                <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
+                            </div>
+                        </div>                        
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeRegisterModal" class="btn btn-danger"
+                        data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="submit" data-bs-dismiss="modal">
+                        <i class="fas fa-save"></i>
+                        <span>Registrar</span>
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de edición de Producto-->
+    <div id="editCustomer" class="modal fade" tabindex="-1" aria-labelledby="editCustomerlabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header bg-dark text-white">
+                    <h2 class="modal-title bg-dark text-white">Editar Producto</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="closeModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <input type="hidden" id="edit-id" name="edit-id">
+                        <div class="field">
+                            <label for="edit-name" class="label"><strong> Nombre </strong></label>
+                            <div class="control">
+                                <input type="text" class="input" name="name" required>
+                            </div>
+                        </div>
+                        <div class="field">
+  <label class="label"><strong>Categoría</strong></label>
+  <div class="control">
+    <input type="text" class="input" name="category" required>
+  </div>
+</div>
+
+                        <div class="field">
+                            <label for="edit-characteristics" class="label"><strong> Características </strong></label>
+                            <div class="control">
+                                <input type="text" class="input" name="characteristics" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="edit-quantity" class="label"><strong> Cantidad </strong></label>
+                            <div class="control">
+                                <input type="number" class="input" name="quantity" required>
+                            </div>
+                        </div> 
+                        <div class="field">
+                            <label for="edit-price" class="label"><strong> Precio </strong></label>
+                            <div class="control">
+                                <input type="text" class="input" name="price" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="edit-img" class="label"><strong> Imagen </strong></label>
+                            <div class="control">
+                                <input type="text" class="input" name="img">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="edit-img2" class="label"><strong> Imagen </strong></label>
+                            <div class="control">
+                                <input type="text" class="input" name="img2">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeEditModal" class="btn btn-danger" data-bs-dismiss="modal"
+                                aria-label="close">Cerrar</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i>
+                                <span>Guardar</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vista de Producto -->
+    <div id="viewProduct" class="modal fade" tabindex="-1" aria-labelledby="viewProductlabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header bg-dark text-white">
+                    <h3 class="modal-title">Detalles del Producto</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <p><strong>Nombre:</strong> <span id="view-name"></span></p>
+                        <p><strong>Características:</strong> <span id="view-characteristics"></span></p>
+                        <p><strong>Cantidad:</strong> <span id="view-quantity"></span></p>
+                        <p><strong>Precio:</strong> <span id="view-price"></span></p>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

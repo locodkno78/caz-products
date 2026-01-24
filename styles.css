@@ -1,60 +1,162 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
 
-html, body {
-    height: 100%; /* Asegura que el body y html ocupen todo el alto de la ventana */
-    margin: 0; /* Elimina cualquier margen predeterminado */
-    padding: 0; /* Elimina cualquier padding predeterminado */
-    display: flex;
-    flex-direction: column;    
-    width: 100%; /* Asegura que el ancho del body y html cubra todo el viewport */
-    overflow-x: hidden; /* Evita el scroll horizontal */
-    background-image: url('./IMG/logo.jpeg');
+html,
+body {
+  height: 100%; /* Asegura que el body y html ocupen todo el alto de la ventana */
+  margin: 0; /* Elimina cualquier margen predeterminado */
+  padding: 0; /* Elimina cualquier padding predeterminado */
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Asegura que el ancho del body y html cubra todo el viewport */
+  overflow-x: hidden; /* Evita el scroll horizontal */
+  background-image: url("./IMG/logo.jpeg");
 }
 
 /* Header */
-header {
-    padding: 10px 0;
-    background-color: #001233;
-}
-.container{
-    margin-top: 10%;
+
+.container {
+  margin-top: 10%;
 }
 
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+    font-size: 30px;
+}
+
+.modal-header {
+    background-color: var(--green);
+    color: var(--white);
+}
+/* Estilos para dispositivos pequeños */
+@media (max-width: 768px) {
+    .navbar-title {
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .collapse,
+    .navbar-collapse {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
 form {
-    background-color: #070707;
-    /* Fondo blanco semitransparente */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    /* Sombra para dar profundidad */
-    color: white;
-    min-height: 350px;
-    /* Altura mínima del formulario */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* Alinea el contenido verticalmente */
-    width: 100%;
-    max-width: 500px;
+ /* background-color: #070707;*/
+  /* Fondo blanco semitransparente */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  /* Sombra para dar profundidad */
+  color: white;
+  min-height: 350px;
+  /* Altura mínima del formulario */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Alinea el contenido verticalmente */
+  width: 100%;
+  max-width: 500px;
 }
 
 h2 {
-    font-size: 2vw;
-    text-align: center;
-    margin-bottom: 20px;
+  font-size: 2vw;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* Ajustar tamaño de las etiquetas y inputs en función del tamaño del formulario */
 label {
-    font-size: 1.5vw; /* Ajusta el tamaño de la fuente en función del ancho de la ventana */
+  font-size: 1.5vw; /* Ajusta el tamaño de la fuente en función del ancho de la ventana */
 }
 
 input {
-    font-size: 1.2vw; /* Ajusta el tamaño del texto de los inputs */
-    height: 2.5vw; /* Ajusta la altura de los inputs */
+  font-size: 1.2vw; /* Ajusta el tamaño del texto de los inputs */
+  height: 2.5vw; /* Ajusta la altura de los inputs */
 }
 
 button {
-    font-size: 1.5vw; /* Ajusta el tamaño del texto del botón */
-    padding: 10px;
+  font-size: 1.5vw; /* Ajusta el tamaño del texto del botón */
+  padding: 10px;
+}
+
+/* Tabla */
+.header {
+    margin-top: 5%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.header .control {
+    flex: 1;
+    min-width: 200px;
+}
+
+.header .control form {
+    background-color: transparent;
+    padding: 0;
+    min-height: auto;
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.header .control .form-control {
+    min-width: 300px;
+}
+
+/* Estilos generales para hacer que la tabla sea responsive */
+.table-responsive {
+    overflow-x: auto;
+}
+
+table.table thead {
+    background-color: #000000 !important;
+}
+
+table.table thead th {
+    background-color: #000000 !important;
+    color: white !important;
+}
+
+/* Formularios */
+.modal-body form .field {
+    margin-bottom: 10px;
+}
+
+.modal-body form .field label {
+    text-align: center;
+}
+
+.modal-body form .field .control {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.modal-body form .field .control input,
+.modal-body form .field .control select,
+.modal-body form .field .control textarea {
+    width: 100%;
+}
+
+.modal-body form .field .control button {
+    width: 100%;
+}
+
+/* Contenido de modal */
+.modal-body .content p {
+    text-align: center;
+}
+
+.btn-close {
+    background-color: #dc3545 !important;
+    filter: brightness(1.2) !important;
 }
