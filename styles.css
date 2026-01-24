@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+
+html, body {
+    height: 100%; /* Asegura que el body y html ocupen todo el alto de la ventana */
+    margin: 0; /* Elimina cualquier margen predeterminado */
+    padding: 0; /* Elimina cualquier padding predeterminado */
+    display: flex;
+    flex-direction: column;    
+    width: 100%; /* Asegura que el ancho del body y html cubra todo el viewport */
+    overflow-x: hidden; /* Evita el scroll horizontal */
+    background-image: url('./IMG/logo.jpeg');
+}
+
+/* Header */
+header {
+    padding: 10px 0;
+    background-color: #001233;
+}
+.container{
+    margin-top: 10%;
+}
+
+form {
+    background-color: #070707;
+    /* Fondo blanco semitransparente */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra para dar profundidad */
+    color: white;
+    min-height: 350px;
+    /* Altura mínima del formulario */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Alinea el contenido verticalmente */
+    width: 100%;
+    max-width: 500px;
+}
+
+h2 {
+    font-size: 2vw;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Ajustar tamaño de las etiquetas y inputs en función del tamaño del formulario */
+label {
+    font-size: 1.5vw; /* Ajusta el tamaño de la fuente en función del ancho de la ventana */
+}
+
+input {
+    font-size: 1.2vw; /* Ajusta el tamaño del texto de los inputs */
+    height: 2.5vw; /* Ajusta la altura de los inputs */
+}
+
+button {
+    font-size: 1.5vw; /* Ajusta el tamaño del texto del botón */
+    padding: 10px;
+}
