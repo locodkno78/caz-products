@@ -87,12 +87,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const filtered = allProducts.filter(
-      (p) =>
-        p.name.toLowerCase().includes(term) ||
-        p.category.toLowerCase().includes(term) ||
-        p.characteristics.toLowerCase().includes(term),
-    );
+    const filtered = allProducts.filter((p) =>
+  [
+    p.name,
+    p.category,
+    p.characteristics
+  ]
+    .filter(Boolean)
+    .some((field) =>
+      field.toLowerCase().includes(term)
+    )
+);
+
 
     renderTable(filtered);
   });
@@ -157,7 +163,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   <td>${product.category}</td>
   <td>${product.characteristics}</td>
   <td>${product.quantity}</td>
-  <td>${product.price}</td>
+  <td>$${product.price}</td>
   <td><img src="${product.img}" width="80"></td>
   <td><img src="${product.img2}" width="80"></td>
   <td>
