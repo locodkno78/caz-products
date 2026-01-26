@@ -46,6 +46,9 @@ body {
         align-items: center;
     }
 }
+#login-form{
+    background-color: black;
+}
 form {
  /* background-color: #070707;*/
   /* Fondo blanco semitransparente */

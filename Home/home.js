@@ -3,7 +3,9 @@ import {
   deleteProduct,
   updateProduct,
   getProduct,
+  auth,
 } from "../firebase.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const table = document.getElementById("table");
@@ -201,4 +203,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     editForm.img.value = product.img;
     editForm.img2.value = product.img2;
   }
+
+  // ==========================
+  // LOGOUT
+  // ==========================
+  const logout = document.querySelector("#logout");
+
+  logout.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      // Cerrar sesión con Firebase
+      await signOut(auth);
+      console.log('Usuario ha cerrado sesión');
+      
+      // Redirigir al login
+      window.location.href = "../index.html";
+    } catch (error) {
+      console.log('Error al cerrar sesión:', error);
+    }
+  });
 });
