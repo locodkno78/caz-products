@@ -1,6 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA9c3gBAo_ENpxC-reRiebauJXivjhP8D8",
@@ -12,50 +13,44 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
 
-export const obtenerPedidos = async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, 'pedidos'));
-    return querySnapshot;  // Devolver el querySnapshot
-  } catch (error) {
-    console.error('Error al obtener pedidos:', error);
-    throw error;  // Relanzar el error para que sea capturado en el llamador
-  }
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+
+
+// ==========================
+// 📸 SUBIR IMAGEN
+// ==========================
+export const subirImagen = async (file) => {
+  if (!file) return "";
+
+  const cleanName = file.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+  const storageRef = ref(
+    storage,
+    `productos/${Date.now()}_${cleanName}`
+  );
+
+  const snapshot = await uploadBytes(storageRef, file);
+  return await getDownloadURL(snapshot.ref);
 };
 
-// Función para actualizar el estado del pedido en la base de datos
-export const actualizarEstadoPedido = async (pedidoId, nuevoEstado) => {
-  console.log('Pedido ID:', pedidoId);
-  try {
-    const pedidoDocRef = doc(db, 'pedidos', pedidoId);
-    // Actualizar el campo 'usuario.estado' en el mapa
-    await updateDoc(pedidoDocRef, { 'usuario.estado': nuevoEstado });
-    console.log('Estado del pedido actualizado correctamente.');
-  } catch (error) {
-    console.error('Error al actualizar el estado del pedido:', error);
-    throw error;
-  }
-};
-
-export const deletePedido = async (pedidoId) => {
-  try {
-    const pedidoRef = doc(db, 'pedidos', pedidoId);
-    await deleteDoc(pedidoRef);
-    console.log("Pedido eliminado correctamente desde Firestore");
-  } catch (error) {
-    console.error("Error al eliminar el pedido:", error);
-  }
-};
-
-export const getForm = async () => {
-  const querySnapshot = await getDocs(collection(db, 'productos'));
-  return querySnapshot;
-};
-
-
-export const saveForm = (name, category, characteristics, quantity, price, img, img2) => {
+// ==========================
+// 📦 PRODUCTOS
+// ==========================
+export const saveForm = (
+  name,
+  category,
+  characteristics,
+  quantity,
+  price,
+  img,
+  img2
+) => {
   return addDoc(collection(db, "productos"), {
     name,
     category,
@@ -64,34 +59,23 @@ export const saveForm = (name, category, characteristics, quantity, price, img, 
     price,
     img,
     img2,
+    createdAt: new Date()
   });
 };
 
-
-export const updateProduct = async (productId, newData) => {
-  const productRef = doc(db, "productos", productId);
-
-  try {
-    await updateDoc(productRef, newData);
-    console.log("Producto actualizado con éxito");
-  } catch (error) {
-    console.error("Error al actualizar el producto:", error);
-  }
-};
-
-export const deleteProduct = async (productId) => {
-  try {
-    const productRef = doc(db, 'productos', productId);
-    await deleteDoc(productRef);
-    console.log("Producto eliminado correctamente");
-  } catch (error) {
-    console.error("Error al eliminar el producto:", error);
-  }
-};
-
 export const getProduct = async () => {
-  const querySnapshot = await getDocs(collection(db, 'productos'));
-  return querySnapshot;
+  return await getDocs(collection(db, "productos"));
 };
 
-export { db, auth };
+export const updateProduct = async (id, data) => {
+  const refDoc = doc(db, "productos", id);
+  await updateDoc(refDoc, data);
+};
+
+export const deleteProduct = async (id) => {
+  const refDoc = doc(db, "productos", id);
+  await deleteDoc(refDoc);
+};
+
+
+

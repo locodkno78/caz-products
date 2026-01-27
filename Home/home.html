@@ -107,18 +107,26 @@
                                 <input class="form-control" name="price" type="number" placeholder="Precio" required>
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="label"><strong> Imagen (URL) </strong></label>
-                            <div class="control">
-                                <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
-                            </div>
-                        </div> 
-                        <div class="field">
-                            <label class="label"><strong> Imagen (URL) </strong></label>
-                            <div class="control">
-                                <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
-                            </div>
-                        </div>                        
+                       <div class="field">
+  <label class="label"><strong> Imagen 1 (URL) </strong></label>
+  <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
+</div>
+
+<div class="field mt-2">
+  <label class="label"><strong> Imagen 1 (Archivo) </strong></label>
+  <input class="form-control" name="imgFile" type="file" accept="image/*">
+</div>
+
+<div class="field mt-3">
+  <label class="label"><strong> Imagen 2 (URL) </strong></label>
+  <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
+</div>
+
+<div class="field mt-2">
+  <label class="label"><strong> Imagen 2 (Archivo) </strong></label>
+  <input class="form-control" name="imgFile2" type="file" accept="image/*">
+</div>
+                  
                         
                 </div>
                 <div class="modal-footer">
@@ -185,17 +193,25 @@
                             </div>
                         </div>
                         <div class="field">
-                            <label for="edit-img" class="label"><strong> Imagen </strong></label>
-                            <div class="control">
-                                <input type="text" class="input" name="img">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="edit-img2" class="label"><strong> Imagen </strong></label>
-                            <div class="control">
-                                <input type="text" class="input" name="img2">
-                            </div>
-                        </div>
+  <label class="label"><strong> Imagen 1 (URL) </strong></label>
+  <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
+</div>
+
+<div class="field mt-2">
+  <label class="label"><strong> Imagen 1 (Archivo) </strong></label>
+  <input class="form-control" name="imgFile" type="file" accept="image/*">
+</div>
+
+<div class="field mt-3">
+  <label class="label"><strong> Imagen 2 (URL) </strong></label>
+  <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
+</div>
+
+<div class="field mt-2">
+  <label class="label"><strong> Imagen 2 (Archivo) </strong></label>
+  <input class="form-control" name="imgFile2" type="file" accept="image/*">
+</div>
+
                         <div class="modal-footer">
                             <button type="button" id="closeEditModal" class="btn btn-danger" data-bs-dismiss="modal"
                                 aria-label="close">Cerrar</button>
