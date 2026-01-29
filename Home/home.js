@@ -6,18 +6,18 @@ import {
   getDocs,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
   ref,
   uploadBytes,
-  getDownloadURL
+  getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+let productos = [];
 
 // =========================
 // ELEMENTOS
@@ -79,7 +79,7 @@ form.addEventListener("submit", async (e) => {
       price: Number(data.get("price")),
       img: imgUrl || "",
       img2: img2Url || "",
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     await addDoc(collection(db, "productos"), product);
@@ -87,7 +87,6 @@ form.addEventListener("submit", async (e) => {
     alert("✅ Producto registrado correctamente");
     form.reset();
     loadProducts();
-
   } catch (error) {
     console.error("❌ Error al registrar producto:", error);
   }
@@ -98,12 +97,13 @@ form.addEventListener("submit", async (e) => {
 // =========================
 async function loadProducts() {
   const snapshot = await getDocs(collection(db, "productos"));
-  const products = snapshot.docs.map(doc => ({
+
+  productos = snapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data()
+    ...doc.data(),
   }));
 
-  renderTable(products);
+  renderTable(productos);
 }
 
 // =========================
@@ -127,7 +127,9 @@ function renderTable(products) {
       ${
         products.length === 0
           ? `<tr><td colspan="8" class="text-center">Sin productos</td></tr>`
-          : products.map(p => `
+          : products
+              .map(
+                (p) => `
             <tr>
               <td>${p.name}</td>
               <td>${p.category}</td>
@@ -156,7 +158,9 @@ function renderTable(products) {
                 </button>
               </td>
             </tr>
-          `).join("")
+          `,
+              )
+              .join("")
       }
     </tbody>
   `;
@@ -168,8 +172,8 @@ function renderTable(products) {
 window.editProduct = async function (id) {
   const snapshot = await getDocs(collection(db, "productos"));
   const product = snapshot.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .find(p => p.id === id);
+    .map((d) => ({ id: d.id, ...d.data() }))
+    .find((p) => p.id === id);
 
   if (!product) return;
 
@@ -214,19 +218,12 @@ editForm.addEventListener("submit", async (e) => {
     quantity: Number(data.get("quantity")),
     price: Number(data.get("price")),
     img: imgUrl || "",
-    img2: img2Url || ""
+    img2: img2Url || "",
   };
-
   await updateDoc(doc(db, "productos", id), updatedProduct);
-
-  bootstrap.Modal.getInstance(
-    document.getElementById("editCustomer")
-  ).hide();
-
+  bootstrap.Modal.getInstance(document.getElementById("editCustomer")).hide();
   loadProducts();
 });
-
-
 // =========================
 // ELIMINAR PRODUCTO
 // =========================
@@ -237,3 +234,33 @@ window.deleteProduct = async function (id) {
   loadProducts();
 };
 
+// =========================
+// BUSCAR PRODUCTOS
+// =========================
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+
+function buscarProductos() {
+  const value = searchInput.value.toLowerCase().trim();
+
+  const filtrados = productos.filter((p) =>
+    p.name.toLowerCase().includes(value),
+  );
+
+  renderTable(filtrados);
+}
+searchInput.addEventListener("input", () => {
+  const value = searchInput.value.toLowerCase().trim();
+
+  if (!value) {
+    renderTable(productos);
+    return;
+  }
+
+  const filtrados = productos.filter((p) =>
+    p.name.toLowerCase().includes(value),
+  );
+
+  renderTable(filtrados);
+});
+searchInput.addEventListener("input", buscarProductos);

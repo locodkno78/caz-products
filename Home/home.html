@@ -36,9 +36,12 @@
             <div class="header d-flex container-fluid">
                 <div class="control">
                     <form class="d-flex" role="search">
-                        <input class="form-control me-2" id="searchInput" type="search" placeholder="Producto"
-                            aria-label="Search">
-                        <button type="button" class="btn btn-danger" id="searchButton">Buscar</button>
+                        <input
+                            class="form-control"
+                            id="searchInput"
+                            type="search"
+                            placeholder="Buscar producto..."
+                        >
                     </form>
                 </div>
                 <button type="button" class="btn btn-danger" id="openRegisterModal" data-bs-toggle="modal"
@@ -73,72 +76,66 @@
                             <label class="label"><strong>Categoría</strong></label>
                             <select class="form-select" name="category" aria-label="Default select example">
                                 <option selected>Categoría</option>
-  <option value="Alambres">Alambres</option>
-  <option value="Herramientas de Mano">Herramientas de Mano</option>
-  <option value="Electrodos">Electrodos</option>
-  <option value="Torchas & Respuestos">Torchas & Respuestos</option>
-  <option value="Compresores">Compresores</option>
-  <option value="Soldadoras">Soldadoras</option>
-  <option value="Sopleteria & Reguladores">Sopleteria & Reguladores</option>
-</select>
+                                <option value="Alambres">Alambres</option>
+                                <option value="Herramientas de Mano">Herramientas de Mano</option>
+                                <option value="Electrodos">Electrodos</option>
+                                <option value="Torchas & Respuestos">Torchas & Respuestos</option>
+                                <option value="Compresores">Compresores</option>
+                                <option value="Soldadoras">Soldadoras</option>
+                                <option value="Sopleteria & Reguladores">Sopleteria & Reguladores</option>
+                            </select>
                         </div>
                         <div class="field">
-  <label class="label"><strong>Características</strong></label>
-  <div class="control">
-    <input
-      class="form-control"
-      name="characteristics"
-      type="text"
-      placeholder="Características del producto"
-      required
-    />
-  </div>
-</div>
-
-                        <div class="field">
-                            <label class="label"><strong> Cantidad </strong></label>
+                            <label class="label"><strong>Características</strong></label>
                             <div class="control">
-                                <input class="form-control" name="quantity" type="number" placeholder="Cantidad" required>
+                                <input
+                                    class="form-control"
+                                    name="characteristics"
+                                    type="text"
+                                    placeholder="Características del producto"
+                                    required
+                                />
+                                </div>
                             </div>
+                        <div class="field">
+                                <label class="label"><strong> Cantidad </strong></label>
+                                <div class="control">
+                                    <input class="form-control" name="quantity" type="number" placeholder="Cantidad" required>
+                                </div>
                         </div>                       
                         <div class="field">
-                            <label class="label"><strong> Precio </strong></label>
-                            <div class="control">
-                                <input class="form-control" name="price" type="number" placeholder="Precio" required>
-                            </div>
+                                <label class="label"><strong> Precio </strong></label>
+                                <div class="control">
+                                    <input class="form-control" name="price" type="number" placeholder="Precio" required>
+                                </div>
                         </div>
-                       <div class="field">
-  <label class="label"><strong> Imagen 1 (URL) </strong></label>
-  <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
-</div>
-
-<div class="field mt-2">
-  <label class="label"><strong> Imagen 1 (Archivo) </strong></label>
-  <input class="form-control" name="imgFile" type="file" accept="image/*">
-</div>
-
-<div class="field mt-3">
-  <label class="label"><strong> Imagen 2 (URL) </strong></label>
-  <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
-</div>
-
-<div class="field mt-2">
-  <label class="label"><strong> Imagen 2 (Archivo) </strong></label>
-  <input class="form-control" name="imgFile2" type="file" accept="image/*">
-</div>
-                  
-                        
+                        <div class="field">
+                                <label class="label"><strong> Imagen 1 (URL) </strong></label>
+                                <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
+                        </div>
+                        <div class="field mt-2">
+                                <label class="label"><strong> Imagen 1 (Archivo) </strong></label>
+                                <input class="form-control" name="imgFile" type="file" accept="image/*">
+                        </div>
+                        <div class="field mt-3">
+                                <label class="label"><strong> Imagen 2 (URL) </strong></label>
+                                <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
+                        </div>
+                        <div class="field mt-2">
+                                <label class="label"><strong> Imagen 2 (Archivo) </strong></label>
+                                <input class="form-control" name="imgFile2" type="file" accept="image/*">
+                        </div>                  
+                        <div class="modal-footer">
+                            <button type="button" id="closeRegisterModal" class="btn btn-danger"
+                                data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-success" id="submit" data-bs-dismiss="modal">
+                            <i class="fas fa-save"></i>
+                            <span>Registrar</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="closeRegisterModal" class="btn btn-danger"
-                        data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="submit" data-bs-dismiss="modal">
-                        <i class="fas fa-save"></i>
-                        <span>Registrar</span>
-                    </button>
-                </div>
-                </form>
-            </div>
+            </div>  
         </div>
     </div>
 
@@ -162,18 +159,17 @@
                         </div>
                         <div class="field">
                             <label class="label"><strong>Categoría</strong></label>
-  <select class="form-select" name="category" aria-label="Default select example">
-  <option selected>Categoría</option>
-  <option value="Alambres">Alambres</option>
-  <option value="Herramientas de Mano">Herramientas de Mano</option>
-  <option value="Electrodos">Electrodos</option>
-  <option value="Torchas & Respuestos">Torchas & Respuestos</option>
-  <option value="Compresores">Compresores</option>
-  <option value="Soldadoras">Soldadoras</option>
-  <option value="Sopleteria & Reguladores">Sopleteria & Reguladores</option>
-</select>
-</div>
-
+                            <select class="form-select" name="category" aria-label="Default select example">
+                                <option selected>Categoría</option>
+                                <option value="Alambres">Alambres</option>
+                                <option value="Herramientas de Mano">Herramientas de Mano</option>
+                                <option value="Electrodos">Electrodos</option>
+                                <option value="Torchas & Respuestos">Torchas & Respuestos</option>
+                                <option value="Compresores">Compresores</option>
+                                <option value="Soldadoras">Soldadoras</option>
+                                <option value="Sopleteria & Reguladores">Sopleteria & Reguladores</option>
+                            </select>
+                        </div>
                         <div class="field">
                             <label for="edit-characteristics" class="label"><strong> Características </strong></label>
                             <div class="control">
@@ -193,25 +189,21 @@
                             </div>
                         </div>
                         <div class="field">
-  <label class="label"><strong> Imagen 1 (URL) </strong></label>
-  <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
-</div>
-
-<div class="field mt-2">
-  <label class="label"><strong> Imagen 1 (Archivo) </strong></label>
-  <input class="form-control" name="imgFile" type="file" accept="image/*">
-</div>
-
-<div class="field mt-3">
-  <label class="label"><strong> Imagen 2 (URL) </strong></label>
-  <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
-</div>
-
-<div class="field mt-2">
-  <label class="label"><strong> Imagen 2 (Archivo) </strong></label>
-  <input class="form-control" name="imgFile2" type="file" accept="image/*">
-</div>
-
+                            <label class="label"><strong> Imagen 1 (URL) </strong></label>
+                            <input class="form-control" name="img" type="text" placeholder="URL de la imagen">
+                        </div>
+                        <div class="field mt-2">
+                            <label class="label"><strong> Imagen 1 (Archivo) </strong></label>
+                            <input class="form-control" name="imgFile" type="file" accept="image/*">
+                        </div>
+                        <div class="field mt-3">
+                            <label class="label"><strong> Imagen 2 (URL) </strong></label>
+                            <input class="form-control" name="img2" type="text" placeholder="URL de la imagen">
+                        </div>
+                        <div class="field mt-2">
+                            <label class="label"><strong> Imagen 2 (Archivo) </strong></label>
+                            <input class="form-control" name="imgFile2" type="file" accept="image/*">
+                        </div>
                         <div class="modal-footer">
                             <button type="button" id="closeEditModal" class="btn btn-danger" data-bs-dismiss="modal"
                                 aria-label="close">Cerrar</button>
