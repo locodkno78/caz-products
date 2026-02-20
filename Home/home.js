@@ -15,7 +15,7 @@ import {
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 let productos = [];
 
@@ -264,3 +264,20 @@ searchInput.addEventListener("input", () => {
   renderTable(filtrados);
 });
 searchInput.addEventListener("input", buscarProductos);
+
+// =========================
+// CERRAR SESIÓN
+// =========================
+const logoutBtn = document.getElementById("logout");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      console.log("✅ Sesión cerrada");
+      window.location.href = "../../index.html"; 
+    } catch (error) {
+      console.error("❌ Error al cerrar sesión:", error);
+    }
+  });
+}
