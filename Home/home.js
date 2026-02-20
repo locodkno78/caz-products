@@ -275,7 +275,7 @@ if (logoutBtn) {
     try {
       await signOut(auth);
       console.log("✅ Sesión cerrada");
-      window.location.href = "../../index.html"; 
+      window.location.href = "../index.html"; 
     } catch (error) {
       console.error("❌ Error al cerrar sesión:", error);
     }
