@@ -15,7 +15,10 @@ import {
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 let productos = [];
 
@@ -77,6 +80,7 @@ form.addEventListener("submit", async (e) => {
       characteristics: data.get("characteristics"),
       quantity: Number(data.get("quantity")),
       price: Number(data.get("price")),
+      currency: data.get("currency"),
       img: imgUrl || "",
       img2: img2Url || "",
       createdAt: new Date(),
@@ -134,7 +138,7 @@ function renderTable(products) {
               <td>${p.name}</td>
               <td>${p.category}</td>
               <td>${p.characteristics}</td>
-              <td>$${p.price}</td>
+              <td>${p.currency === "USD" ? "USD" : "$"} ${p.price}</td>
               <td>${p.quantity}</td>
               <td>
                 ${p.img ? `<img src="${p.img}" width="70">` : "-"}
@@ -182,7 +186,8 @@ window.editProduct = async function (id) {
   editForm.category.value = product.category;
   editForm.characteristics.value = product.characteristics;
   editForm.quantity.value = product.quantity;
-  editForm.price.value = product.price;
+  document.getElementById("edit-price").value = product.price;
+  document.getElementById("edit-currency").value = product.currency || "ARS";
   editForm.img.value = product.img || "";
   editForm.img2.value = product.img2 || "";
 };
@@ -216,7 +221,8 @@ editForm.addEventListener("submit", async (e) => {
     category: data.get("category"),
     characteristics: data.get("characteristics"),
     quantity: Number(data.get("quantity")),
-    price: Number(data.get("price")),
+    price: Number(data.get("edit-price")),
+    currency: data.get("edit-currency"),
     img: imgUrl || "",
     img2: img2Url || "",
   };
@@ -275,7 +281,7 @@ if (logoutBtn) {
     try {
       await signOut(auth);
       console.log("✅ Sesión cerrada");
-      window.location.href = "../index.html"; 
+      window.location.href = "../index.html";
     } catch (error) {
       console.error("❌ Error al cerrar sesión:", error);
     }
