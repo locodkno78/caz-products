@@ -9,7 +9,7 @@ const firebaseConfig = {
   projectId: "base-de-datos-4c1cd",
   storageBucket: "base-de-datos-4c1cd.appspot.com",
   messagingSenderId: "452851254594",
-  appId: "1:452851254594:web:fda7e2f51a253e651134db"
+  appId: "1:452851254594:web:fda7e2f51a253e651134db",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -17,7 +17,6 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
-
 
 // ==========================
 // 📸 SUBIR IMAGEN
@@ -30,10 +29,7 @@ export const subirImagen = async (file) => {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-zA-Z0-9._-]/g, "_");
 
-  const storageRef = ref(
-    storage,
-    `productos/${Date.now()}_${cleanName}`
-  );
+  const storageRef = ref(storage, `productos/${Date.now()}_${cleanName}`);
 
   const snapshot = await uploadBytes(storageRef, file);
   return await getDownloadURL(snapshot.ref);
@@ -49,7 +45,7 @@ export const saveForm = (
   quantity,
   price,
   img,
-  img2
+  img2,
 ) => {
   return addDoc(collection(db, "productos"), {
     name,
@@ -59,7 +55,7 @@ export const saveForm = (
     price,
     img,
     img2,
-    createdAt: new Date()
+    createdAt: new Date(),
   });
 };
 
@@ -76,6 +72,3 @@ export const deleteProduct = async (id) => {
   const refDoc = doc(db, "productos", id);
   await deleteDoc(refDoc);
 };
-
-
-
