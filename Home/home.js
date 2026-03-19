@@ -81,8 +81,8 @@ form.addEventListener("submit", async (e) => {
       quantity: Number(data.get("quantity")),
       price: Number(data.get("price")),
       currency: data.get("currency"),
-      img: imgUrl || "",
-      img2: img2Url || "",
+      img: imgUrl || null,
+      img2: img2Url || null,
       createdAt: new Date(),
     };
 
@@ -222,11 +222,11 @@ editForm.addEventListener("submit", async (e) => {
     characteristics: data.get("characteristics"),
     quantity: Number(data.get("quantity")),
     price: Number(data.get("edit-price")),
-    currency: data.get("edit-currency"),    
+    currency: data.get("edit-currency"),
   };
   // 👇 SOLO actualizar si hay valor
-if (imgUrl) updatedProduct.img = imgUrl;
-if (img2Url) updatedProduct.img2 = img2Url;
+  if (imgUrl) updatedProduct.img = imgUrl;
+  if (img2Url) updatedProduct.img2 = img2Url;
   await updateDoc(doc(db, "productos", id), updatedProduct);
   bootstrap.Modal.getInstance(document.getElementById("editCustomer")).hide();
   loadProducts();
