@@ -1,4 +1,4 @@
-import { auth, db, storage } from "../firebase.js";
+import { auth, db } from "../firebase.js";
 
 import {
   collection,
@@ -7,18 +7,12 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 import {
   onAuthStateChanged,
   signOut,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
 let productos = [];
 
@@ -45,10 +39,27 @@ onAuthStateChanged(auth, (user) => {
 // SUBIR IMAGEN
 // =========================
 async function uploadImage(file) {
-  const fileName = `productos/${Date.now()}_${file.name}`;
-  const storageRef = ref(storage, fileName);
-  await uploadBytes(storageRef, file);
-  return await getDownloadURL(storageRef);
+  if (!file) return "";
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "productos_app");
+
+  try {
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dgvyryeoq/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    return data.secure_url;
+  } catch (error) {
+    console.error("❌ Error subiendo imagen:", error);
+    return "";
+  }
 }
 
 // =========================

@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
+//import { getStorage } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA9c3gBAo_ENpxC-reRiebauJXivjhP8D8",
@@ -16,23 +16,34 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-export const storage = getStorage(app);
+//export const storage = getStorage(app);
 
 // ==========================
 // 📸 SUBIR IMAGEN
 // ==========================
+
 export const subirImagen = async (file) => {
   if (!file) return "";
 
-  const cleanName = file.name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9._-]/g, "_");
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "productos_app");
 
-  const storageRef = ref(storage, `productos/${Date.now()}_${cleanName}`);
+  try {
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dgvyryeoq/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
 
-  const snapshot = await uploadBytes(storageRef, file);
-  return await getDownloadURL(snapshot.ref);
+    const data = await res.json();
+    return data.secure_url; // 🔥 URL final de la imagen
+  } catch (error) {
+    console.error("Error subiendo imagen:", error);
+    return "";
+  }
 };
 
 // ==========================
